@@ -10,7 +10,7 @@ declare(strict_types=0);
  */
 $config = [
     'module_machine_name' => 'es_worklog',
-    'version_number'      => '1.1.0',
+    'version_number'      => '1.1.1',
     // templates render with Twig autoescape on (Templater::declares_autoescape())
     'autoescape'          => true,
     'module_name'         => 'Work Log',

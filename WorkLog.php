@@ -266,7 +266,9 @@ class WorkLog extends Modules implements ModulesInterface
     {
         $file = $this->module_path . '/assets/css/styles.css';
 
-        return '/modules/WorkLog/assets/css/styles.css' . (is_file($file) ? '?v=' . filemtime($file) : '');
+        //the folder it runs from (1.1.1): /modules, or /modules-added once the
+        //release no longer carries it (core 2.99.0)
+        return $this->modules_folder . '/' . $this->module_name . '/assets/css/styles.css' . (is_file($file) ? '?v=' . filemtime($file) : '');
     }
 
     /**
