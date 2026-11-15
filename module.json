@@ -1,0 +1,9 @@
+{
+  "name": "WorkLog",
+  "title": "Work Log",
+  "description": "Jot down what you just did in a few seconds, and find it again later. Only you can see it.",
+  "author": "Kevin Bruce",
+  "version": "1.1.0",
+  "core": "2.99.0",
+  "requires": []
+}

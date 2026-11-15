@@ -1,0 +1,32 @@
+{# My log (Work Log 1.0.0): the box, the list, the export. ListView's search
+   box sits OUTSIDE the target div, which every search, sort, page turn and
+   delete replaces; the box, the headers and the target share one .es_list
+   ancestor. The export is a GET form, so it carries no token (CLAUDE.md,
+   CSRF): it only reads. .wl-log tells the header's + this page shows the log. #}
+<div class="wl-page wl-log">
+    <section class="wl-card" aria-label="Log something">
+        {{ box|raw }}
+    </section>
+
+    <section class="wl-card es_list" aria-labelledby="wl-entries-h">
+        <div class="wl-card-head">
+            <h2 id="wl-entries-h">My log</h2>
+            {{ search_box|raw }}
+        </div>
+        <div id="{{ target }}">
+            {{ table|raw }}
+        </div>
+    </section>
+
+    <section class="wl-card" aria-labelledby="wl-export-h">
+        <h2 id="wl-export-h" class="wl-export-h">Export</h2>
+        <form method="get" action="{{ export_url }}" class="wl-export">
+            <label for="wl-from">From</label>
+            <input type="date" id="wl-from" name="from" class="form-control" value="{{ from }}">
+            <label for="wl-to">To</label>
+            <input type="date" id="wl-to" name="to" class="form-control" value="{{ to }}">
+            <button type="submit" name="format" value="docx" class="btn btn-outline-secondary">Word</button>
+            <button type="submit" name="format" value="csv" class="btn btn-outline-secondary">CSV</button>
+        </form>
+    </section>
+</div>

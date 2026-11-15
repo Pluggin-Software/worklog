@@ -1,0 +1,53 @@
+{# My log's list fragment (Work Log 1.0.0): rendered on page load and by
+   every live search, sort, page turn and delete (ajax_entries_table,
+   submit_delete), each carrying the search, sort and page back. A day row
+   opens wherever the day changes in the sorted list, in a <tbody> of its
+   own — a rowgroup header names its own tbody, and a single shared one
+   would have every day header announced for every row (a screen reader
+   would get the wrong day). Edit opens a modal; Delete asks first
+   (data-confirm, which html_element_post honors) and answers this fragment
+   again. #}
+{% if entries is empty %}
+    <p class="wl-empty">{{ searching ? 'Nothing in your log matches that.' : 'Nothing logged yet. What did you just do?' }}</p>
+{% else %}
+<div class="table-responsive">
+    <table class="table wl-table">
+        <thead>
+            <tr>
+                {{ controls.th.time|raw }}
+                <th scope="col">What</th>
+                <th scope="col"><span class="screen-reader">Actions</span></th>
+            </tr>
+        </thead>
+        {% for entry in entries %}
+            {% if entry.new_day %}
+                {% if not loop.first %}</tbody>{% endif %}
+                <tbody>
+                <tr class="wl-day"><th scope="rowgroup" colspan="3">{{ entry.day_label }}</th></tr>
+            {% endif %}
+            <tr>
+                <td class="wl-time"><time datetime="{{ entry.datetime }}">{{ entry.time_label }}</time></td>
+                <td class="wl-text">{{ entry.body }}</td>
+                <td class="wl-row-menu">
+                    <details class="wl-menu">
+                        <summary aria-label="Actions for the entry at {{ entry.time_label }}"><i class="fa-solid fa-ellipsis" aria-hidden="true"></i></summary>
+                        <div class="wl-menu-items">
+                            <button type="button" class="es_ajax_modal"
+                                    data-useclass="WorkLog" data-usemethod="ajax_edit_form" data-action="ajax"
+                                    data-entry_id="{{ entry.id }}">Edit</button>
+                            <button type="button" class="html_element_post onclick wl-delete"
+                                    data-useclass="WorkLog" data-usemethod="submit_delete"
+                                    data-entry_id="{{ entry.id }}" data-confirm="Delete this entry?"
+                                    data-targetdiv="{{ target }}" data-q="{{ carry.q }}" data-sort="{{ carry.sort }}"
+                                    data-dir="{{ carry.dir }}" data-page="{{ carry.page }}">Delete</button>
+                        </div>
+                    </details>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {# every entries list here is non-empty, so at least one tbody was opened above #}
+</div>
+<div class="wl-list-foot">{{ controls.count|raw }} {{ controls.pager|raw }}</div>
+{% endif %}

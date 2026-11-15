@@ -1,0 +1,8 @@
+{# The + modal's answer on a page that does not show the log: say so, then
+   close this modal (modal.js: es_modal_close_level). No data-targetdiv
+   exists on every page, so the reply closes itself. #}
+<div class="wl-logged" role="status">
+    <p><i class="fa-solid fa-check" aria-hidden="true"></i> Logged.</p>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+<script>setTimeout(function () { if (typeof es_modal_close_level === 'function') { es_modal_close_level(es_modal_top_level()); } }, 1200);</script>

@@ -1,0 +1,70 @@
+/*
+ * Work Log (1.0.0). Registered for My log (config.php css) and linked by the
+ * dashboard widget and the + modal themselves, because neither the
+ * dashboard nor an arbitrary page loads a module's stylesheet. The intranet
+ * palette, written out (Today's).
+ */
+
+.wl-entry-form { margin: 0 0 12px; }
+.wl-entry-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.wl-entry-row .wl-body { flex: 1 1 260px; min-width: 0; }
+.wl-entry-row .wl-when { flex: 0 1 220px; }
+.wl-entry-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 8px; margin-top: 4px; font-size: 12.5px; color: #4A626A; }
+.wl-count { font-variant-numeric: tabular-nums; }
+.wl-error { margin: 0 0 8px; }
+.wl-modal-title { margin: 0 0 12px; font-size: 1.15rem; }
+.wl-logged p { margin: 0 0 12px; font-weight: 600; color: #105460; }
+
+.wl-page .wl-card { margin: 0 0 16px; padding: 16px; border: 1px solid #D5E3E7; border-radius: 10px; background: #FFFFFF; color: #12313B; }
+
+@media (max-width: 480px) {
+    .wl-entry-row .wl-when,
+    .wl-entry-row .btn { flex: 1 1 100%; }
+}
+
+/* Today's log, the dashboard widget */
+.wl-widget { color: #12313B; }
+.wl-widget .wl-today { list-style: none; margin: 0; padding: 0; border: 1px solid #D5E3E7; border-radius: 10px; background: #FFFFFF; overflow: hidden; }
+.wl-widget .wl-today li { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 8px; padding: 7px 12px; border-bottom: 1px solid #EAF1F3; font-size: 13.5px; }
+.wl-widget .wl-today li:last-child { border-bottom: 0; }
+.wl-widget .wl-time { color: #4A626A; font-size: 12.5px; font-variant-numeric: tabular-nums; padding-top: 1px; }
+.wl-widget .wl-text { overflow-wrap: anywhere; }
+
+@media (max-width: 480px) {
+    .wl-widget .wl-today li { grid-template-columns: 1fr; gap: 2px; }
+}
+
+/* My log's list */
+.wl-card-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.wl-card-head h2 { margin: 0; font-size: 1.2rem; }
+.wl-card-head .es_list_search { flex: 0 1 320px; }
+.wl-empty { margin: 8px 0; color: #4A626A; }
+.wl-table .wl-day th { background: #F3F7F8; color: #105460; font-size: 13px; }
+.wl-table .wl-time { width: 96px; white-space: nowrap; color: #4A626A; font-variant-numeric: tabular-nums; }
+.wl-table .wl-text { overflow-wrap: anywhere; }
+.wl-row-menu { width: 44px; text-align: right; }
+.wl-menu { position: relative; display: inline-block; }
+.wl-menu summary { list-style: none; cursor: pointer; padding: 2px 8px; border-radius: 6px; }
+.wl-menu summary::-webkit-details-marker { display: none; }
+.wl-menu summary:hover,
+.wl-menu summary:focus-visible { background: #E4F1F4; }
+.wl-menu-items { position: absolute; right: 0; z-index: 5; display: flex; flex-direction: column; min-width: 120px; padding: 4px; border: 1px solid #D5E3E7; border-radius: 8px; background: #FFFFFF; box-shadow: 0 4px 12px rgba(18, 49, 59, .12); }
+.wl-menu-items button { padding: 6px 10px; border: 0; border-radius: 6px; background: none; text-align: left; color: #12313B; }
+.wl-menu-items button:hover,
+.wl-menu-items button:focus-visible { background: #E4F1F4; }
+.wl-menu-items .wl-delete { color: #A12A2A; }
+.wl-list-foot { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+
+@media (max-width: 480px) {
+    .wl-card-head .es_list_search { flex: 1 1 100%; }
+    .wl-table .wl-time { width: 72px; }
+}
+
+/* My log's export */
+.wl-export-h { margin: 0 0 8px; font-size: 1.05rem; }
+.wl-export { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.wl-export .form-control { width: auto; }
+
+@media (max-width: 480px) {
+    .wl-export .form-control { flex: 1 1 60%; }
+}

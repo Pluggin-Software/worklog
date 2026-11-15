@@ -1,0 +1,24 @@
+{# Edit one entry, in a modal (Work Log 1.0.0). No data-targetdiv: a refusal
+   re-renders this form in place with what was typed; a save answers
+   ~reload, and My log is the only page with an Edit. Posts entry_id, never
+   id (PostRouter passes a posted id positionally). #}
+<h3 class="wl-modal-title">Edit entry</h3>
+<form method="post" class="es_ajax_submit wl-edit-form">
+    {{ csrf_field }}
+    <input type="hidden" name="useclass" value="WorkLog">
+    <input type="hidden" name="usemethod" value="submit_edit">
+    <input type="hidden" name="action" value="ajax">
+    <input type="hidden" name="entry_id" value="{{ entry_id }}">
+    {% if error %}<div class="alert alert-danger" role="alert" id="wl-edit-error">{{ error }}</div>{% endif %}
+    <div class="mb-3">
+        <label for="wl-edit-body" class="form-label">What you did</label>
+        <input type="text" id="wl-edit-body" name="body" class="form-control" maxlength="{{ max_length }}" value="{{ body }}"
+               autocomplete="off" required{% if error %} aria-invalid="true" aria-describedby="wl-edit-error"{% endif %}>
+    </div>
+    <div class="mb-3">
+        <label for="wl-edit-when" class="form-label">When</label>
+        <input type="datetime-local" id="wl-edit-when" name="when" class="form-control" value="{{ when }}" max="{{ when_max }}" aria-describedby="wl-edit-when-hint">
+        <div id="wl-edit-when-hint" class="form-text">Pick the date and time. Empty means now.</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

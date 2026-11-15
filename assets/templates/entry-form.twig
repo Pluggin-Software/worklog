@@ -1,0 +1,42 @@
+{# The entry box (Work Log 1.0.0), one template for all three doors.
+   modal: the header's +. es_ajax_submit with no data-targetdiv, so a refusal
+     re-renders this form in the modal with what was typed. Its reload field
+     is set as it submits: 1 when the page behind holds .wl-log (the widget,
+     My log), so the answer can be ~reload.
+   widget / page: a plain POST to the page it is on; submit_entry() answers
+     with a redirect back.
+   When is the browser's own date-and-time picker (datetime-local), capped
+   at now; blank means now. No script, so it works in all three doors.
+   Enter saves everywhere: one text input. The count shows past 400
+   characters only, from an oninput attribute, so it works however the box
+   arrived (a page, the dashboard's batch, a modal); the module ships no
+   script. #}
+{% if css %}<link rel="stylesheet" href="{{ css }}">{% endif %}
+{% if modal %}<h3 class="wl-modal-title">Log what I just did</h3>{% endif %}
+<form method="post" class="wl-entry-form{% if modal %} es_ajax_submit{% endif %}"{% if modal %} onsubmit="this.elements.reload.value = document.querySelector('.wl-log') ? '1' : '0';"{% endif %}>
+    {{ csrf_field }}
+    <input type="hidden" name="useclass" value="WorkLog">
+    <input type="hidden" name="usemethod" value="submit_entry">
+    {% if modal %}
+        <input type="hidden" name="action" value="ajax">
+        <input type="hidden" name="reload" value="0">
+    {% endif %}
+    {% if error %}<div class="alert alert-danger wl-error" role="alert" id="wl-error-{{ door }}">{{ error }}</div>{% endif %}
+    <div class="wl-entry-row">
+        <label class="screen-reader" for="wl-body-{{ door }}">What did you just do?</label>
+        <input type="text" id="wl-body-{{ door }}" name="body" class="form-control wl-body" maxlength="{{ max_length }}"
+               value="{{ body }}" placeholder="What did you just do?" autocomplete="off" required{% if autofocus %} autofocus{% endif %}{% if error %} aria-invalid="true" aria-describedby="wl-error-{{ door }}"{% endif %}
+               oninput="var c = this.form.querySelector('.wl-count'); if (c) { c.hidden = this.value.length <= 400; c.textContent = this.value.length + ' / 500'; }">
+        <label class="screen-reader" for="wl-when-{{ door }}">When</label>
+        <input type="datetime-local" id="wl-when-{{ door }}" name="when" class="form-control wl-when" value="{{ when }}"
+               max="{{ when_max }}" aria-describedby="wl-when-hint-{{ door }}">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+    <div class="wl-entry-foot">
+        <span id="wl-when-hint-{{ door }}">When is optional: leave it blank for now, or pick an earlier date and time.</span>
+        <span class="wl-count" aria-live="polite" hidden></span>
+    </div>
+</form>
+{% if modal %}
+<script>(function () { var b = document.getElementById('wl-body-modal'); if (b) { b.focus(); } })();</script>
+{% endif %}

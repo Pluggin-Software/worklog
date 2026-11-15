@@ -1,0 +1,27 @@
+{# Today's log (Work Log 1.0.0): the box, then today's entries, newest first.
+   Wears the Dashboard's frame (docs/architecture/dashboard-widgets.md):
+   dw-body, dw-head with dw-title/dw-icon/dw-count, one dw-action, dw-empty
+   for nothing. Links the module's stylesheet itself (the dashboard loads no
+   module's). .wl-log tells the header's + this page shows the log. #}
+<link rel="stylesheet" href="{{ css }}">
+<section class="wl-widget wl-log dw-body">
+    <header class="dw-head">
+        <h2 class="dw-title"><a href="{{ log_url }}"><span class="dw-icon" aria-hidden="true"><i class="fa-solid fa-clipboard-list"></i></span>Today's log</a></h2>
+        {% if count > 0 %}<span class="dw-count" aria-label="{{ count }} {{ count == 1 ? 'entry' : 'entries' }} today">{{ count }}</span>{% endif %}
+        <div class="dw-actions">
+            <a class="dw-action" href="{{ log_url }}">My log</a>
+        </div>
+    </header>
+
+    {{ box|raw }}
+
+    {% if entries is not empty %}
+        <ol class="wl-today">
+            {% for entry in entries %}
+                <li><time class="wl-time" datetime="{{ entry.datetime }}">{{ entry.time_label }}</time> <span class="wl-text">{{ entry.body }}</span></li>
+            {% endfor %}
+        </ol>
+    {% else %}
+        <p class="dw-empty">Nothing logged today.</p>
+    {% endif %}
+</section>
